@@ -23,7 +23,7 @@ public class MemberdetailActivity extends AppCompatActivity {
         findViewById(btUpdate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MemberdetailActivity.this, "id:"+id, Toast.LENGTH_LONG).show();
+                Toast.makeText(MemberdetailActivity.this, id, Toast.LENGTH_LONG).show();
                 startActivity(new Intent(MemberdetailActivity.this, MemberupdateActivity.class));
             }
         });

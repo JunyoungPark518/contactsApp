@@ -35,10 +35,10 @@ public class MemberlistActivity extends AppCompatActivity {
                         return mlist.list("SELECT _id AS id, name, phone, age, address, salary FROM Member;");
                     }
                 };
-                ArrayList<MemberBean> list = (ArrayList<MemberBean>)service.list();
+                ArrayList<?> list = service.list();
                 Toast.makeText(MemberlistActivity.this, list.get(0).toString(), Toast.LENGTH_LONG).show();
                 Intent it = new Intent(MemberlistActivity.this, MemberdetailActivity.class);
-                it.putExtra("id",list.get(0).getId());
+                it.putExtra("id",list.get(0).toString());
                 startActivity(it);
             }
         });
