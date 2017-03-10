@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.hanbit.contactsapp.dao.DatabaseHelper;
 import com.hanbit.contactsapp.presentation.MemberlistActivity;
 
 import static com.hanbit.contactsapp.R.id.btGoList;
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this,"GO Click!",Toast.LENGTH_LONG).show();
+                DatabaseHelper helper = new DatabaseHelper(MainActivity.this);
                 Intent i = new Intent(MainActivity.this, MemberlistActivity.class);
                 i.putExtra("id","hong");
                 startActivity(i);

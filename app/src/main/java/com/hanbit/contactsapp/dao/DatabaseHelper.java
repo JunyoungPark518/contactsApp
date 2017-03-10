@@ -25,11 +25,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "age TEXT," +
                 "address TEXT," +
                 "salary TEXT);");
-        for (int i=0; i<10; i++) {
+       /* for (int i=0; i<10; i++) {
             db.execSQL(String.format("INSERT INTO Member(name, phone, age, address, salary) " +
                     "VALUES('%s','%s','%s','%s','%s');",
-                    "홍길동"+i,"010-1234-123"+i,"2"+i,"서울",(i+1)+"0000000"));
-        }
+                    "홍길동"+i, "010-1234-123"+i, "2"+i, "서울", (i+1)+"0000000"));
+        }*/
     }
 
     @Override
