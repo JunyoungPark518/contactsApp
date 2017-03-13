@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -23,31 +24,33 @@ import com.hanbit.contactsapp.service.ListService;
 import java.util.ArrayList;
 
 import static com.hanbit.contactsapp.R.id.btAdd;
-import static com.hanbit.contactsapp.R.id.btDetail;
 
 public class MemberlistActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memberlist);
-        ListView mList = (ListView) findViewById(R.id.mList);
+        final ListView mList = (ListView) findViewById(R.id.mList);
         final MemberBean member = new MemberBean();
-        mList.setAdapter(new MemberAdapter(null, this)); // Adapter Pattern
-        findViewById(btDetail).setOnClickListener(new View.OnClickListener() {
+        ListService service = new ListService() {
             @Override
-            public void onClick(View v) {
-                final MemberList mlist = new MemberList(MemberlistActivity.this);
-                ListService service = new ListService() {
-                    @Override
-                    public ArrayList<?> list() {
-                        return mlist.list("SELECT _id AS id, name, phone, age, address, salary FROM Member;");
-                    }
-                };
-                ArrayList<?> list = service.list();
-                Toast.makeText(MemberlistActivity.this, list.get(0).toString(), Toast.LENGTH_LONG).show();
+            public ArrayList<?> list() {
+                return new MemberList(MemberlistActivity.this).list("SELECT _id AS id, name, phone, age, address, salary FROM Member;");
+            }
+        };
+        mList.setAdapter(new MemberAdapter(service.list(), this)); // Adapter Pattern
+        mList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int i, long l) {
                 Intent it = new Intent(MemberlistActivity.this, MemberdetailActivity.class);
-                it.putExtra("id",list.get(0).toString());
+                it.putExtra("id", ((MemberBean) mList.getItemAtPosition(i)).getId());
                 startActivity(it);
+            }
+        });
+        mList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                return false;
             }
         });
         findViewById(btAdd).setOnClickListener(new View.OnClickListener(){
