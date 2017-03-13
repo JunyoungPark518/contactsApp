@@ -32,6 +32,7 @@ public class MemberlistActivity extends AppCompatActivity {
         setContentView(R.layout.activity_memberlist);
         ListView mList = (ListView) findViewById(R.id.mList);
         final MemberBean member = new MemberBean();
+        mList.setAdapter(new MemberAdapter(null, this)); // Adapter Pattern
         findViewById(btDetail).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
