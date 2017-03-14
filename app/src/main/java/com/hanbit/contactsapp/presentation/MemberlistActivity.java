@@ -18,10 +18,13 @@ import android.widget.Toast;
 
 import com.hanbit.contactsapp.R;
 import com.hanbit.contactsapp.dao.ListQuery;
+import com.hanbit.contactsapp.dao.SQLExecution;
 import com.hanbit.contactsapp.domain.MemberBean;
+import com.hanbit.contactsapp.service.DeleteService;
 import com.hanbit.contactsapp.service.ListService;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import static com.hanbit.contactsapp.R.id.btAdd;
 
@@ -47,10 +50,18 @@ public class MemberlistActivity extends AppCompatActivity {
                 startActivity(it);
             }
         });
+        DeleteService delservice = new DeleteService() {
+            @Override
+            public void delete(Map<?, ?> map) {
+
+            }
+        };
         mList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                return false;
+                String sql = "";
+                new MemberDelete(MemberlistActivity.this).execute(sql);
+                return true;
             }
         });
         findViewById(btAdd).setOnClickListener(new View.OnClickListener(){
@@ -148,5 +159,15 @@ public class MemberlistActivity extends AppCompatActivity {
     static class ViewHolder{
         ImageView profileImg;
         TextView tvName, tvPhone;
+    }
+    class MemberDelete extends SQLExecution {
+        public MemberDelete(Context context) {
+            super(context);
+        }
+
+        @Override
+        public void execute(String sql) {
+            this.getDatabase().execSQL(sql);
+        }
     }
 }
